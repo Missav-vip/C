@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery with 3D Flip Effect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .gallery-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding-bottom: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      width: max-content;
+      scroll-snap-align: start;
+    }
+
+    .gallery-item {
+      position: relative;
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      cursor: pointer;
+      perspective: 1000px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.7);
+    }
+
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card .front,
+    .flip-card .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .flip-card .front {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .flip-card .back {
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotateY(180deg);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.7);
+    }
+
+    .back img {
+      width: 50%;
+      height: auto;
+    }
+
+    /* Scrollbar untuk Webkit (Chrome, Edge, Safari) */
+    .gallery-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .gallery-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .gallery-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="gallery-container">
+    <div class="gallery">
+      <div class="gallery-item">
+        <div class="flip-card">
+          <!-- Bagian Depan -->
+          <div class="front" style="background-image: url('Funkie.jpg')" onclick="flipCard(this)"></div>
+          <!-- Bagian Belakang -->
+          <div class="back" onclick="handleBackClick(event)">
+            <img src="logo.png" alt="Logo">
+          </div>
+        </div>
+        <div>Image 1</div>
+      </div>
+      <!-- Gambar lainnya bisa ditambahkan di sini -->
+    </div>
+  </div>
+
+  <!-- JavaScript bagian terpisah -->
+  <scripts>
+    // Fungsi untuk flip card
+    function flipCard(card) {
+      const flipCardElement = card.closest('.flip-card'); 
+      flipCardElement.classList.toggle('flipped'); // Menambahkan atau menghapus kelas 'flipped'
+    }
+
+    // Fungsi untuk klik pada bagian belakang
+    function handleBackClick(event) {
+      event.stopPropagation(); // Menghindari flip card ketika klik bagian belakang
+      alert("Memeriksa ukuran Cloud file...");
+      // Anda bisa menambahkan logika pemeriksaan ukuran Cloud file di sini
+    }
+  </scripts>
+
+</body>
+</html>
