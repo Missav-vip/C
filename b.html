@@ -20,18 +20,18 @@
 
     .gallery-container {
       display: flex;
-      overflow-x: auto;
+      overflow-x: auto; /* Agar galeri bisa digeser ke kiri-kanan */
       gap: 10px;
       padding-bottom: 20px;
-      scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory; /* Agar ketika digeser, posisi snap */
     }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr); /* 4 kolom per baris */
       grid-gap: 10px;
-      width: max-content;
-      scroll-snap-align: start;
+      width: max-content; /* Menjaga agar panjang grid tidak terbatas */
+      scroll-snap-align: start; /* Agar snap saat geser */
     }
 
     .gallery-item {
@@ -39,16 +39,16 @@
       background-color: #333;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Efek shadow */
       text-align: center;
       cursor: pointer;
-      perspective: 1000px;
+      perspective: 1000px; /* Menambahkan perspektif untuk efek flip */
       transition: all 0.3s ease-in-out;
     }
 
     .gallery-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.7);
+      transform: scale(1.05); /* Memperbesar gambar sedikit saat hover */
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.7); /* Cahaya saat hover */
     }
 
     .flip-card {
@@ -70,12 +70,13 @@
       height: 100%;
       backface-visibility: hidden;
       border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Shadow untuk efek 3D */
     }
 
     .flip-card .front {
       background-size: cover;
       background-position: center;
+      transition: transform 0.5s ease; /* Animasi smooth untuk efek flip */
     }
 
     .flip-card .back {
@@ -84,12 +85,47 @@
       justify-content: center;
       align-items: center;
       transform: rotateY(180deg);
-      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.7);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.7); /* Cahaya pada bagian belakang */
     }
 
     .back img {
       width: 50%;
       height: auto;
+    }
+
+    .gallery-item div {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px 0;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Responsif untuk HP: 4 gambar dalam satu baris */
+    @media (max-width: 768px) {
+      .gallery-item {
+        width: 85px;
+        height: 85px;
+      }
+    }
+
+    /* Responsif untuk Tablet: 6 gambar dalam satu baris */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .gallery-item {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    /* Responsif untuk Desktop: 8 gambar dalam satu baris */
+    @media (min-width: 1025px) {
+      .gallery-item {
+        width: 120px;
+        height: 120px;
+      }
     }
 
     /* Scrollbar untuk Webkit (Chrome, Edge, Safari) */
@@ -112,36 +148,136 @@
 
   <div class="gallery-container">
     <div class="gallery">
-      <div class="gallery-item">
+      <!-- Gambar-Gambar -->
+      <div class="gallery-item" onclick="checkStorageAndDownload(1)">
         <div class="flip-card">
-          <!-- Bagian Depan -->
           <div class="front" style="background-image: url('Funkie.jpg')" onclick="flipCard(this)"></div>
-          <!-- Bagian Belakang -->
-          <div class="back" onclick="handleBackClick(event)">
+          <div class="back">
             <img src="logo.png" alt="Logo">
+            <button onclick="handleBackClick(event)">Klik untuk memeriksa ukuran Cloud file</button>
           </div>
         </div>
         <div>Image 1</div>
       </div>
-      <!-- Gambar lainnya bisa ditambahkan di sini -->
+      <div class="gallery-item" onclick="checkStorageAndDownload(1)">
+        <div class="flip-card">
+          <div class="front" style="background-image: url('Funkie.jpg')" onclick="flipCard(this)"></div>
+          <div class="back">
+            <img src="logo.png" alt="Logo">
+            <button onclick="handleBackClick(event)">Klik untuk memeriksa ukuran Cloud file</button>
+          </div>
+        </div>
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item" onclick="checkStorageAndDownload(1)">
+        <div class="flip-card">
+          <div class="front" style="background-image: url('Funkie.jpg')" onclick="flipCard(this)"></div>
+          <div class="back">
+            <img src="logo.png" alt="Logo">
+            <button onclick="handleBackClick(event)">Klik untuk memeriksa ukuran Cloud file</button>
+          </div>
+        </div>
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item" onclick="checkStorageAndDownload(1)">
+        <div class="flip-card">
+          <div class="front" style="background-image: url('Funkie.jpg')" onclick="flipCard(this)"></div>
+          <div class="back">
+            <img src="logo.png" alt="Logo">
+            <button onclick="handleBackClick(event)">Klik untuk memeriksa ukuran Cloud file</button>
+          </div>
+        </div>
+        <div>Image 4</div>
+      </div>
     </div>
   </div>
 
-  <!-- JavaScript bagian terpisah -->
-  <scripts>
-    // Fungsi untuk flip card
-    function flipCard(card) {
-      const flipCardElement = card.closest('.flip-card'); 
-      flipCardElement.classList.toggle('flipped'); // Menambahkan atau menghapus kelas 'flipped'
+  <!-- Your script starts here -->
+  <script>
+    // Function to check available storage
+    function checkStorageAndDownload(sizeInZB) {
+      if (navigator.storage && navigator.storage.estimate) {
+        navigator.storage.estimate().then((storage) => {
+          const availableSpace = storage.quota - storage.usage;
+          if (availableSpace >= sizeInZB * Math.pow(1024, 5)) { // Convert size from ZB to bytes
+            alert('Sufficient storage. Proceeding to download...');
+            checkUserLocation(); // Proceed to location check
+          } else {
+            alert('Insufficient storage space for the file.');
+          }
+        }).catch((error) => {
+          alert('Error checking storage: ' + error);
+        });
+      } else {
+        alert('Storage estimation not supported by this browser.');
+      }
     }
 
-    // Fungsi untuk klik pada bagian belakang
-    function handleBackClick(event) {
-      event.stopPropagation(); // Menghindari flip card ketika klik bagian belakang
-      alert("Memeriksa ukuran Cloud file...");
-      // Anda bisa menambahkan logika pemeriksaan ukuran Cloud file di sini
+    // Function to check user's location
+    function checkUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const highRiskAreas = [
+            { lat: 35.3606, lng: 137.4280 }, // Example location: Mount Fuji
+            { lat: 38.2970, lng: 141.0196 }  // Example location: Fukushima
+          ];
+
+          const isHighRisk = highRiskAreas.some(area => {
+            const distance = Math.sqrt(
+              Math.pow(latitude - area.lat, 2) + Math.pow(longitude - area.lng, 2)
+            );
+            return distance < 0.1; // Rough check for proximity
+          });
+
+          if (isHighRisk) {
+            generateTokenAndDownload();
+          } else {
+            alert('Download is only allowed in high-risk areas.');
+          }
+        }, (error) => {
+          alert('Error getting geolocation: ' + error.message);
+        });
+      } else {
+        alert('Geolocation is not supported by this browser.');
+      }
     }
-  </scripts>
+
+    // Function to generate a random token, encrypt it, and start download
+    function generateTokenAndDownload() {
+      const token = generateRandomToken();
+      const encryptedToken = encryptToken(token);
+      alert('Generated token: ' + encryptedToken);
+      // You can trigger the download process here
+    }
+
+    function generateRandomToken() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let token = '';
+      for (let i = 0; i < 16; i++) {
+        token += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return token;
+    }
+
+    function encryptToken(token) {
+      // Simple mock encryption: Reverse the token
+      return token.split('').reverse().join('');
+    }
+
+    // Flip card effect when front is clicked
+    function flipCard(element) {
+      const card = element.closest('.flip-card');
+      card.classList.toggle('flipped');
+    }
+
+    // Handle back click
+    function handleBackClick(event) {
+      event.stopPropagation(); // Prevent triggering the gallery item click
+      alert('Back clicked. Show cloud storage details.');
+    }
+  </script>
 
 </body>
 </html>
